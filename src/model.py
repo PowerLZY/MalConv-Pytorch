@@ -1,3 +1,7 @@
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
 class MalConv(nn.Module):
     def __init__(self,input_length=2000000,window_size=500):
         super(MalConv, self).__init__()

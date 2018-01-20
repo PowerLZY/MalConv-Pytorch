@@ -1,4 +1,3 @@
-
 # coding: utf-8
 import os
 import time
@@ -33,12 +32,9 @@ torch.manual_seed(seed)
 
 train_data_path = conf['train_data_path']
 train_label_path = conf['train_label_path']
-overwrite_label_path = conf['overwrite_label_path']
-
 
 valid_data_path = conf['valid_data_path']
 valid_label_path = conf['valid_label_path']
-overwrite_valid_label_path = conf['overwrite_valid_label_path']
 
 log_dir = conf['log_dir']
 pred_dir = conf['pred_dir']
