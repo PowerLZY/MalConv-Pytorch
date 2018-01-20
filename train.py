@@ -43,7 +43,7 @@ checkpoint_dir = conf['checkpoint_dir']
 
 
 log_file_path = log_dir+exp_name+'.log'
-chkpt_acc_path = checkpoint_dir+exp_name+'.acc'
+chkpt_acc_path = checkpoint_dir+exp_name+'.model'
 pred_path = pred_dir+exp_name+'.pred'
 
 # Parameters
@@ -76,7 +76,7 @@ val_table = val_label_table.groupby(level=0).last()
 del val_label_table
 tr_table = tr_table.drop(val_table.index.join(tr_table.index, how='inner'))
 
-print('Traing Set:')
+print('Training Set:')
 print('\tTotal',len(tr_table),'files')
 print('\tMalware Count :',tr_table['ground_truth'].value_counts()[1])
 print('\tGoodware Count:',tr_table['ground_truth'].value_counts()[0])
