@@ -21,6 +21,7 @@ try:
     conf = yaml.load(open(config_path,'r'))
 except:
     print('Usage: python3 run_exp.py <config file path> <seed>')
+    sys.exit()
 
 
 exp_name = conf['exp_name']+'_sd_'+str(seed)

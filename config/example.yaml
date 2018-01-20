@@ -2,9 +2,9 @@ exp_name: 'example'
 
 ### Data path
 train_data_path: 'data/train/'                    # Training data
-train_label_path: 'data/expample-train-label.csv' # Training label                  
+train_label_path: 'data/example-train-label.csv' # Training label                  
 valid_data_path: 'data/valid/'                    # Validation Data
-valid_label_path: 'data/expample-valid-label.csv' # Validation Label
+valid_label_path: 'data/example-valid-label.csv' # Validation Label
 
 ### output path
 log_dir: 'log/'
@@ -16,7 +16,6 @@ use_gpu: True             #
 use_cpu: 1                # Number of cores to use for data loader
 display_step: 2           # Std output update rate during training
 test_step: 20             # Test per n step
-use_ground_truth: True    # Using training label from "train_label_path"
 learning_rate: 0.0001     #
 max_step: 1000            # Number of steps to train
 batch_size: 20            #
