@@ -12,7 +12,7 @@ pred_dir: 'pred/'
 checkpoint_dir: 'checkpoint/'
 
 ### Parameter
-use_gpu: True             #
+use_gpu: False             #
 use_cpu: 1                # Number of cores to use for data loader
 display_step: 2           # Std output update rate during training
 test_step: 20             # Test per n step

@@ -16,8 +16,8 @@ from torch.autograd import Variable
 
 # Load config file for experiment
 try:
-    config_path = sys.argv[1]
-    seed = int(sys.argv[2])
+    config_path = "/Users/apple/Documents/GitHub/Deep learning for malware detection/MalConv-Pytorch/config/example.yaml" #sys.argv[1]
+    seed = 10 #int(sys.argv[2])
     conf = yaml.load(open(config_path,'r'))
 except:
     print('Usage: python3 run_exp.py <config file path> <seed>')
@@ -147,8 +147,8 @@ while total_step < max_step:
         loss = bce_loss(pred,label)
         loss.backward()
         adam_optim.step()
-        
-        history['tr_loss'].append(loss.cpu().data.numpy()[0])
+
+        history['tr_loss'].append(loss.cpu().data.numpy())
         history['tr_acc'].extend(list(label.cpu().data.numpy().astype(int)==(sigmoid(pred).cpu().data.numpy()+0.5).astype(int)))
         
         step_cost_time = time.time()-start
@@ -180,7 +180,7 @@ while total_step < max_step:
         pred = malconv(exe_input)
         loss = bce_loss(pred,label)
 
-        history['val_loss'].append(loss.cpu().data.numpy()[0])
+        history['val_loss'].append(loss.cpu().data.numpy())
         history['val_acc'].extend(list(label.cpu().data.numpy().astype(int)==(sigmoid(pred).cpu().data.numpy()+0.5).astype(int)))
         history['val_pred'].append(list(sigmoid(pred).cpu().data.numpy()))
 
