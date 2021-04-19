@@ -49,8 +49,8 @@ For parameters and options availible, please refer to [`config/example.yaml`](co
 
   + **Malware Detection by Eating a Whole EXE（2018 AAAIW)**
 
-  + **==Malware detection using 1-dimensional convolutional neural networks== （ 2019 EuroS&PW）**
-  + **==Activation analysis of a byte based deep neural network for malware classification==** **(2019 S&PW)**
+  + **Malware detection using 1-dimensional convolutional neural networks （ 2019 EuroS&PW）**
+  + **Activation analysis of a byte based deep neural network for malware classification** **(2019 S&PW)**
   + **Adversarial Malware Binaries: Evading Deep Learning for Malware Detection in Executables**
     + **Malconv优化**
     + 论文 https://arxiv.org/abs/2012.09390
