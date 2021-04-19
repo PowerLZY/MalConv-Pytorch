@@ -40,6 +40,11 @@ Log file, prediction on validation set & Model checkpoint will be stored at the 
 
 For parameters and options availible, please refer to [`config/example.yaml`](config/example.yaml).
 
+### TFRecord reader and writer
+为了高效地读取数据，比较有帮助的一种做法是对数据进行序列化并将其存储在一组可线性读取的文件（每个文件 100-200MB）中。
+这尤其适用于通过网络进行流式传输的数据。这种做法对缓冲任何数据预处理也十分有用。
+TFRecord 格式是一种用于存储二进制记录序列的简单格式。
+https://github.com/vahidk/tfrecord
 
 ## 基于深度学习的恶意软件检测
 
