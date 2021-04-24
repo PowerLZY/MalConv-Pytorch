@@ -1,6 +1,7 @@
 exp_name: 'example'
 
 ### Data path
+
 train_data_path: 'data/train/'                    # Training data
 train_label_path: 'data/example-train-label.csv' # Training label                  
 valid_data_path: 'data/valid/'                    # Validation Data
