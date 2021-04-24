@@ -103,7 +103,7 @@ https://github.com/vahidk/tfrecord
 + 希望自己的神经网络对分类的结果具有一定的可解释性，以节约分析师的精力和时间。本文的思想是受到[Zhou et al. 2016]论文中的类激活映射（CAM）技术的启发而获得灵感的。对于良性和恶意软件中的每一个类别，我们都会为卷积层中最活跃的应用位置上每个过滤器的相对贡献生成一个映射。
   + **Learning Deep Features for Discriminative Localization. Zhou, B.; Khosla, A.; Lapedriza, A.; Oliva, A.; and Torralba, A. (CVPR 2016)** [https://arxiv.org/abs/1512.04150](https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.04150)
 
-<img src="picture/malconv.png" alt="image-20210422151703635" style="zoom:50%;" />
+!<img src="picture/malconv.png" style="zoom:33%;" />
 
 + 通过阅读已经发表的相关论文，我们发现，对于字节n-gram模型来说，几乎所有的判别性信息都是从可执行文件的头部中取得的。这意味着字节n-gram模型通常不使用文件的实际可执行代码或数据段作为判别性特征。表1中的结果表明，在我们的测试中，可以访问整个可执行文件的模型比仅限于文件头的模型具有更高的分类准确性。
 + 我们的恶意软件分析专家对224个随机选取的二进制文件的稀疏CAM进行分析的结果显示，在我们的模型获取的最重要的特征中，有39-42％的特征位于文件头之外。特别是，我们发现可执行代码和数据中都含有判别性特征
