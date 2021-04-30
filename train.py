@@ -14,7 +14,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 
 
-# Load config file for experiment
+# 加载配置文件
 try:
     config_path = "/Users/apple/Documents/GitHub/Deep learning for malware detection/MalConv-Pytorch/config/example.yaml" #sys.argv[1]
     seed = 10 #int(sys.argv[2])
@@ -23,7 +23,7 @@ except:
     print('Usage: python3 run_exp.py <config file path> <seed>')
     sys.exit()
 
-
+# 开始试验
 exp_name = conf['exp_name']+'_sd_'+str(seed)
 print('Experiment:')
 print('\t',exp_name)
@@ -90,9 +90,9 @@ print('\tGoodware Count:',val_table['ground_truth'].value_counts()[0])
 if sample_cnt != 1:
     tr_table = tr_table.sample(n=sample_cnt,random_state=seed)
 
+dataset_test = ExeDataset(list(tr_table.index), train_data_path, list(tr_table.ground_truth),first_n_byte)
 
-dataloader = DataLoader(ExeDataset(list(tr_table.index), train_data_path, list(tr_table.ground_truth),first_n_byte),
-                            batch_size=batch_size, shuffle=True, num_workers=use_cpu)
+dataloader = DataLoader(dataset_test , batch_size=batch_size, shuffle=True, num_workers=use_cpu)
 validloader = DataLoader(ExeDataset(list(val_table.index), valid_data_path, list(val_table.ground_truth),first_n_byte),
                         batch_size=batch_size, shuffle=False, num_workers=use_cpu)
 

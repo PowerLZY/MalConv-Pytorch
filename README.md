@@ -1,6 +1,6 @@
 # MalConv-Pytorch
 A Pytorch implementation of MalConv
-
+- [ ] 改写数据读取为 black/white 文件夹
 ---
 ## Desciprtion
 
