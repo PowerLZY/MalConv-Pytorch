@@ -1,42 +1,44 @@
 # coding: utf-8
-
-from src.util import *
 import os
 import time
 import sys
-import yaml
+curPath = os.path.abspath(os.path.dirname(__file__))
+rootPath = os.path.split(curPath)[0]
+sys.path.append(rootPath)
+
+from src.util import *
 import numpy as np
 import pandas as pd
-from src.util import ExeDataset,write_pred
 from src.model import MalConv
 from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
-import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
 
-label_path = "/Users/apple/Documents/GitHub/Deep learning for malware detection/MalConv-Pytorch/data/"
-train_data_path = "../data/mining/"  # Training data
-train_label_path = '../data/example-train-label.csv' # Training label
-valid_label_path = '../data/example-valid-label.csv' # Validation Label
+
+label_path = curPath+ "/data/"
+train_data_path =curPath + "/data/mining/"  # Training data
+train_label_path = curPath +'/data/example-train-label.csv' # Training label
+valid_label_path = curPath +'/data/example-valid-label.csv' # Validation Label
 
 exp_name = 'malconv'
 
 ### Parameter
-use_gpu = False             #
-use_cpu = 1                # Number of cores to use for data loader
-display_step = 2           # Std output update rate during training
-test_step = 20             # Test per n step
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+use_gpu = True                #
+use_cpu = 32                # Number of cores to use for data loader
+display_step = 10           # Std output update rate during training
+#test_step = 20             # Test per n step
 learning_rate = 0.0001     #
-max_step = 1000            # Number of steps to train
-batch_size = 2          #
+max_step = 2000            # Number of steps to train
+batch_size = 32          #
 first_n_byte = 2000000     # First N bytes of a PE file as the input of MalConv (defualt: 2 million)
 window_size = 500          # Kernel size & stride for Malconv (defualt : 500)
 ### output path
-log_dir = '../log/'
-pred_dir = '../pred/'
-checkpoint_dir = '../checkpoint/'
+log_dir = curPath + '/log/'
+pred_dir = curPath + '/pred/'
+checkpoint_dir = curPath +'/checkpoint/'
 log_file_path = log_dir+exp_name+'.log'
 chkpt_acc_path = checkpoint_dir+exp_name+'.model'
 pred_path = pred_dir+exp_name+'.pred'
@@ -64,9 +66,9 @@ validset.to_csv(label_path + "example-valid-label.csv", index=False, header= Fal
 
 
 trainloader = DataLoader(ExeDataset(list(trainset['id']), train_data_path, list(trainset['labels']),first_n_byte),
-                        batch_size=batch_size, shuffle=False, num_workers=1)
+                        batch_size=batch_size, shuffle=False, num_workers=use_cpu, pin_memory=True)
 validloader = DataLoader(ExeDataset(list(validset['id']), train_data_path, list(validset['labels']),first_n_byte),
-                        batch_size=batch_size, shuffle=False, num_workers=1)
+                        batch_size=batch_size, shuffle=False, num_workers=use_cpu, pin_memory=True)
 
 
 malconv = MalConv(input_length=first_n_byte,window_size=window_size)
@@ -79,7 +81,7 @@ if use_gpu:
     bce_loss = bce_loss.cuda()
     sigmoid = sigmoid.cuda()
 
-step_msg = 'step-{}-loss-{:.6f}-acc-{:.4f}-time-{:.2f}'
+step_msg = 'step-{}-loss-{:.6f}-acc-{:.4f}-time-{:.2f}s'
 valid_msg = 'step-{}-tr_loss-{:.6f}-tr_acc-{:.4f}-val_loss-{:.6f}-val_acc-{:.4f}'
 log_msg = '{}, {:.6f}, {:.4f}, {:.6f}, {:.4f}, {:.2f}'
 history = {}
@@ -122,18 +124,20 @@ while total_step < max_step:
         step_cost_time = time.time() - start
 
         if (step + 1) % display_step == 0:
-            print(step_msg.format(total_step, np.mean(history['tr_loss']),
-                                  np.mean(history['tr_acc']), step_cost_time), end='\r', flush=True)
+            print(step_msg.format(total_step, np.mean(history['tr_loss']), np.mean(history['tr_acc']), step_cost_time))
+
+
         total_step += 1
 
         # Interupt for validation
-        if total_step % test_step == 0:
-            break
+        #if total_step % test_step == 0:
+            #break
 
     # Testing
     history['val_loss'] = []
     history['val_acc'] = []
     history['val_pred'] = []
+
 
     for _, val_batch_data in enumerate(validloader):
         cur_batch_size = val_batch_data[0].size(0)
@@ -153,20 +157,9 @@ while total_step < max_step:
         history['val_pred'].append(list(sigmoid(pred).cpu().data.numpy()))
 
     print(log_msg.format(total_step, np.mean(history['tr_loss']), np.mean(history['tr_acc']),
-                         np.mean(history['val_loss']), np.mean(history['val_acc']), step_cost_time),
-          file=log, flush=True)
+                         np.mean(history['val_loss']), np.mean(history['val_acc']), step_cost_time))
 
     print(valid_msg.format(total_step, np.mean(history['tr_loss']), np.mean(history['tr_acc']),
                            np.mean(history['val_loss']), np.mean(history['val_acc'])))
-    """
-    保存最优模型
-    if valid_best_acc < np.mean(history['val_acc']):
-        valid_best_acc = np.mean(history['val_acc'])
-        torch.save(malconv, chkpt_acc_path)
-        print('Checkpoint saved at', chkpt_acc_path)
-        write_pred(history['val_pred'], valid_idx, pred_path)
-        print('Prediction saved at', pred_path)
-    """
 
-    history['tr_loss'] = []
-    history['tr_acc'] = []
+
