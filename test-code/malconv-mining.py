@@ -30,7 +30,7 @@ display_step = 2           # Std output update rate during training
 test_step = 20             # Test per n step
 learning_rate = 0.0001     #
 max_step = 1000            # Number of steps to train
-batch_size = 20            #
+batch_size = 2          #
 first_n_byte = 2000000     # First N bytes of a PE file as the input of MalConv (defualt: 2 million)
 window_size = 500          # Kernel size & stride for Malconv (defualt : 500)
 ### output path
@@ -64,9 +64,9 @@ validset.to_csv(label_path + "example-valid-label.csv", index=False, header= Fal
 
 
 trainloader = DataLoader(ExeDataset(list(trainset['id']), train_data_path, list(trainset['labels']),first_n_byte),
-                        batch_size=20, shuffle=False, num_workers=1)
+                        batch_size=batch_size, shuffle=False, num_workers=1)
 validloader = DataLoader(ExeDataset(list(validset['id']), train_data_path, list(validset['labels']),first_n_byte),
-                        batch_size=20, shuffle=False, num_workers=1)
+                        batch_size=batch_size, shuffle=False, num_workers=1)
 
 
 malconv = MalConv(input_length=first_n_byte,window_size=window_size)
