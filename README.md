@@ -1,7 +1,10 @@
 # MalConv-Pytorch
 A Pytorch implementation of MalConv
-- [ ] 改写数据读取为 black/white 文件夹
-- [ ] Integrated gradients applied to malware programs
+
+- [x] 改写数据读取为 black/white 文件夹
+- [x] Integrated gradients applied to malware programs
+- [ ] 服务器保存模型
+
 ---
 ## Desciprtion
 
