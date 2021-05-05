@@ -10,6 +10,7 @@ from captum.attr import (
     DeepLift,
     DeepLiftShap,
     IntegratedGradients,# 积分梯度
+    LayerIntegratedGradients,
     LayerConductance,
     NeuronConductance,
     NoiseTunnel,
@@ -32,19 +33,59 @@ class ToyModel(nn.Module):
         return self.lin2(self.relu(self.lin1(input)))
 
 
-model = ToyModel()
+class MalConv(nn.Module):
+
+    def __init__(self, input_length=2000000, window_size=500):
+        super(MalConv, self).__init__()
+
+        self.embed = nn.Embedding(257, 8, padding_idx=0)
+
+        self.conv_1 = nn.Conv1d(4, 128, window_size, stride=window_size, bias=True)
+        self.conv_2 = nn.Conv1d(4, 128, window_size, stride=window_size, bias=True)
+
+        self.pooling = nn.MaxPool1d(int(input_length / window_size))
+
+        self.fc_1 = nn.Linear(128, 128)
+        self.fc_2 = nn.Linear(128, 1)
+
+        self.sigmoid = nn.Sigmoid()
+
+        # self.softmax = nn.Softmax()
+
+    def forward(self, x):
+        x = self.embed(x)
+        # Channel first
+        x = torch.transpose(x, -1, -2)
+
+        cnn_value = self.conv_1(x.narrow(-2, 0, 4))
+        gating_weight = self.sigmoid(self.conv_2(x.narrow(-2, 4, 4)))
+
+        x = cnn_value * gating_weight
+        x = self.pooling(x)
+
+        x = x.view(-1, 128)
+        x = self.fc_1(x)
+        x = self.fc_2(x)
+        # x = self.sigmoid(x)
+
+        return x
+model = MalConv()
+model.load_state_dict(torch.load('/home/lizy/ml/MalConv-Pytorch/checkpoint/malconv.pt'))
 model.eval()
 
 torch.manual_seed(123)
 np.random.seed(123)
 
-input = torch.rand(2, 3)
-baseline = torch.zeros(2, 3)
+input = torch.rand(1, 2000000)
+baseline = torch.zeros(1, 2000000)
 
-ig = IntegratedGradients(model)
-attributions, delta = ig.attribute(input, baseline, target=0, return_convergence_delta=True)
+#ig = IntegratedGradients(model)
 
-print('IG Attributions:', attributions)
+lig = LayerIntegratedGradients(model, model.embed)
+attributions_ig, delta = lig.attribute(input, baseline, n_steps=500, return_convergence_delta=True)
+#attributions, delta = ig.attribute(input, baseline, target=0, return_convergence_delta=True)
+
+print('IG Attributions:', attributions_ig)
 print('Convergence Delta:', delta)
 
 import matplotlib.pyplot as plt
