@@ -2,8 +2,8 @@
 A Pytorch implementation of MalConv
 
 - [x] 改写数据读取为 black/white 文件夹
-- [x] Integrated gradients applied to malware programs
-- [ ] 服务器保存模型
+- [x] 服务器保存模型
+- [ ] [Integrated gradients applied to malware programs](https://captum.ai/tutorials/IMDB_TorchText_Interpret)
 
 ---
 ## Desciprtion
