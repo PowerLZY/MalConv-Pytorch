@@ -52,14 +52,14 @@ https://github.com/vahidk/tfrecord
 
  ## 基于深度学习的恶意软件检测		
 
-​		与特性空间不同的是，即使稍加修改，也**不能简单地更改原始二进制数据，否则会损坏其功能**。此外，二进制数据的大小差异很大，这进一步增加了攻击困难。我们同时发现在保存生成的对抗样本时，将连续空间中的对抗有效载荷转换回离散二进制时，会忽略细微的扰动，从而影响对抗攻击的有效性。因此，如何在保护原有功能的同时，对基于恶意软件二进制文件的深度学习模型进行有效而实用的黑盒攻击仍然是一个巨大的挑战。==**原始二进制文件具有可变的输入大小**==。
++ 与特性空间不同的是，即使稍加修改，也**不能简单地更改原始二进制数据，否则会损坏其功能**。此外，二进制数据的大小差异很大，这进一步增加了攻击困难。我们同时发现在保存生成的对抗样本时，将连续空间中的对抗有效载荷转换回离散二进制时，会忽略细微的扰动，从而影响对抗攻击的有效性。因此，如何在保护原有功能的同时，对基于恶意软件二进制文件的深度学习模型进行有效而实用的黑盒攻击仍然是一个巨大的挑战。==**原始二进制文件具有可变的输入大小**==。
 
 + **深度学习恶意软件检测模型：**深度神经网络可以有效地挖掘原始数据中的潜在特征，而无需大量数据预处理和先验经验。
 
   + **Malware Detection by Eating a Whole EXE（2018 AAAIW)**
 
-  + **==Malware detection using 1-dimensional convolutional neural networks== （ 2019 EuroS&PW）**
-  + **==Activation analysis of a byte based deep neural network for malware classification==** **(2019 S&PW)**
+  + ***Malware detection using 1-dimensional convolutional neural networks （ 2019 EuroS&PW）***
+  + ***Activation analysis of a byte based deep neural network for malware classification (2019 S&PW)***
   + **Adversarial Malware Binaries: Evading Deep Learning for Malware Detection in Executables**
     + **Malconv优化**
     + 论文 https://arxiv.org/abs/2012.09390
@@ -107,7 +107,7 @@ https://github.com/vahidk/tfrecord
 + 希望自己的神经网络对分类的结果具有一定的可解释性，以节约分析师的精力和时间。本文的思想是受到[Zhou et al. 2016]论文中的类激活映射（CAM）技术的启发而获得灵感的。对于良性和恶意软件中的每一个类别，我们都会为卷积层中最活跃的应用位置上每个过滤器的相对贡献生成一个映射。
   + **Learning Deep Features for Discriminative Localization. Zhou, B.; Khosla, A.; Lapedriza, A.; Oliva, A.; and Torralba, A. (CVPR 2016)** [https://arxiv.org/abs/1512.04150](https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.04150)
 
-!<img src="picture/malconv.png" width = "200" height = "300" alt="" align=center />
+<img src="picture/malconv.png" width = "400" height = "600" align=center />
 
 + 通过阅读已经发表的相关论文，我们发现，对于字节n-gram模型来说，几乎所有的判别性信息都是从可执行文件的头部中取得的。这意味着字节n-gram模型通常不使用文件的实际可执行代码或数据段作为判别性特征。表1中的结果表明，在我们的测试中，可以访问整个可执行文件的模型比仅限于文件头的模型具有更高的分类准确性。
 + 我们的恶意软件分析专家对224个随机选取的二进制文件的稀疏CAM进行分析的结果显示，在我们的模型获取的最重要的特征中，有39-42％的特征位于文件头之外。特别是，我们发现可执行代码和数据中都含有判别性特征
