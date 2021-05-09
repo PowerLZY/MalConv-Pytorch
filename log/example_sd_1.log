@@ -1,2 +1,0 @@
-step,tr_loss, tr_acc, val_loss, val_acc, time
-20, 0.658974, 0.6075, 0.776949, 0.5000, 1.07
