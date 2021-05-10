@@ -29,7 +29,8 @@ from captum.attr import (
     NeuronConductance,
     NoiseTunnel,
 )
-
+"""
+example model
 class ToyModel(nn.Module):
     def __init__(self):
         super().__init__()
@@ -45,44 +46,7 @@ class ToyModel(nn.Module):
 
     def forward(self, input):
         return self.lin2(self.relu(self.lin1(input)))
-
-
-class MalConv(nn.Module):
-
-    def __init__(self, input_length=2000000, window_size=500):
-        super(MalConv, self).__init__()
-
-        self.embed = nn.Embedding(257, 8, padding_idx=0)
-
-        self.conv_1 = nn.Conv1d(4, 128, window_size, stride=window_size, bias=True)
-        self.conv_2 = nn.Conv1d(4, 128, window_size, stride=window_size, bias=True)
-
-        self.pooling = nn.MaxPool1d(int(input_length / window_size))
-
-        self.fc_1 = nn.Linear(128, 128)
-        self.fc_2 = nn.Linear(128, 1)
-
-        self.sigmoid = nn.Sigmoid()
-
-        # self.softmax = nn.Softmax()
-
-    def forward(self, x):
-        x = self.embed(x)
-        # Channel first
-        x = torch.transpose(x, -1, -2)
-
-        cnn_value = self.conv_1(x.narrow(-2, 0, 4))
-        gating_weight = self.sigmoid(self.conv_2(x.narrow(-2, 4, 4)))
-
-        x = cnn_value * gating_weight
-        x = self.pooling(x)
-
-        x = x.view(-1, 128)
-        x = self.fc_1(x)
-        x = self.fc_2(x)
-        # x = self.sigmoid(x)
-
-        return x
+"""
 
 label_path = curPath+ "/data/"
 train_data_path =curPath + "/data/mining/"  # Training data
@@ -140,6 +104,9 @@ np.random.seed(123)
 validloader = DataLoader(ExeDataset(list(validset['id']), train_data_path, list(validset['labels']),first_n_byte),
                         batch_size=batch_size, shuffle=False, num_workers=use_cpu, pin_memory=True)
 
+if use_gpu:
+    model = model.cuda()
+
 for _, val_batch_data in enumerate(validloader):
     cur_batch_size = val_batch_data[0].size(0)
 
@@ -155,7 +122,9 @@ for _, val_batch_data in enumerate(validloader):
 
     print('IG Attributions:', attributions_ig)
     print('Convergence Delta:', delta)
-
+"""
+heatmap 
+"""
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
