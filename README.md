@@ -15,9 +15,9 @@ This is the implementation of MalConv proposed in [Malware Detection by Eating a
 Please make sure each of them is installed with the correct version
 
 - numpy
-- pytorch (0.3.0.post4)
-- pandas (0.20.3)
-
+- pytorch 
+- pandas 
+...
 
 ## Setup
 
