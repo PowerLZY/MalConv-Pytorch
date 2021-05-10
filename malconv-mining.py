@@ -43,7 +43,7 @@ log_dir = curPath + '/log/'
 pred_dir = curPath + '/pred/'
 checkpoint_dir = curPath +'/checkpoint/'
 log_file_path = log_dir+exp_name+'.log'
-chkpt_acc_path = checkpoint_dir+exp_name+first_n_byte+'.pt'
+chkpt_acc_path = checkpoint_dir+exp_name+'1000.pt'
 pred_path = pred_dir+exp_name+'.pred'
 
 #get_data_label("/Users/apple/Desktop/机器学习/DataCon_2020/恶意代码检测/gray/1_2000_black/*", label_path, "/black.csv")

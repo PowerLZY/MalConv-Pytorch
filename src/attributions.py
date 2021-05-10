@@ -1,21 +1,15 @@
-# Integrated gradients applied to malware programs
 import os
-import time
 import sys
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 
-from src.util import *
-import pandas as pd
-from src.model import MalConv
-from torch.utils.data import DataLoader
-from sklearn.model_selection import train_test_split
 import numpy as np
 import torch
-import torch.nn as nn
 from torch.autograd import Variable
 from src.model import MalConv
+from src.util import *
+from torch.utils.data import DataLoader
 
 from captum.attr import (
     IntegratedGradients,# 积分梯度
@@ -66,8 +60,8 @@ model.eval()
 
 torch.manual_seed(123)
 np.random.seed(123)
-
-validloader = DataLoader(ExeDataset(['0a1ba0fea8bab5cabe474df91b7e44cd'], train_data_path, [1],first_n_byte),
+# 文件名列表、数据文件夹、文件列表标签、前n位字节
+validloader = DataLoader(ExeDataset(['Backdoor.Win32.Agent.bflv_ce22.exe'], train_data_path, [1],first_n_byte),
                         batch_size=batch_size, shuffle=False, num_workers=use_cpu)
 if use_gpu:
     model = model.cuda()
@@ -83,5 +77,14 @@ for _, val_batch_data in enumerate(validloader):
     lig = LayerIntegratedGradients(model, model.embed)
     attributions_ig = lig.attribute(exe_input, baseline, target=0)
 
-    print('IG Attributions:', attributions_ig)
+    attributions = attributions_ig.sum(dim=2).squeeze(0)
+    attributions = attributions / torch.norm(attributions)
+    attributions = attributions.cpu().detach().numpy()
+
+    print('IG Attributions:', attributions)
+    malware = exe_input.squeeze(0).cpu().detach().numpy()
+    conf = model(exe_input)
+    title = 'Confidence: {0:.4f}%\nDOS + COFF + OPT + SECT Headers\nBaseline : empty file'.format(conf.item() * 100)
+    plot_code_segment(malware, 0, 512, attributions, title, force_plot=True, show_positives=True, show_negatives=True)
+    plot_header_contribution_histogram(malware.tobytes(), attributions, force_plot=True)
     break;
