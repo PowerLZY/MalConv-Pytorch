@@ -21,11 +21,14 @@ label_path = curPath+ "/data/"
 train_data_path =curPath + "/data/mining/"  # Training data
 train_label_path = curPath +'/data/example-train-label.csv' # Training label
 valid_label_path = curPath +'/data/example-valid-label.csv' # Validation Label
-
+"""
+服务器执行语法：
+nohup /usr/local/anaconda3/bin/python3.7 /home/lizy/ml/MalConv-Pytorch/malconv-mining.py >> /home/lizy/ml/MalConv-Pytorch/log/malconv-mining-1000.log 2>&1 
+"""
 exp_name = 'malconv'
 
 ### Parameter
-os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 use_gpu = True                #
 use_cpu = 32                # Number of cores to use for data loader
 display_step = 10           # Std output update rate during training
@@ -33,14 +36,14 @@ test_step = 150             # Test per n step
 learning_rate = 0.0001     #
 max_step = 1000            # Number of steps to train
 batch_size = 32          #
-first_n_byte = 2000000     # First N bytes of a PE file as the input of MalConv (defualt: 2 million)
+first_n_byte = 1000000     # First N bytes of a PE file as the input of MalConv (defualt: 2 million)
 window_size = 500          # Kernel size & stride for Malconv (defualt : 500)
 ### output path
 log_dir = curPath + '/log/'
 pred_dir = curPath + '/pred/'
 checkpoint_dir = curPath +'/checkpoint/'
 log_file_path = log_dir+exp_name+'.log'
-chkpt_acc_path = checkpoint_dir+exp_name+'.pt'
+chkpt_acc_path = checkpoint_dir+exp_name+first_n_byte+'.pt'
 pred_path = pred_dir+exp_name+'.pred'
 
 #get_data_label("/Users/apple/Desktop/机器学习/DataCon_2020/恶意代码检测/gray/1_2000_black/*", label_path, "/black.csv")
