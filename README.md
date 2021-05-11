@@ -85,7 +85,7 @@ https://github.com/vahidk/tfrecord
     + 一种解释方法是，门控卷积层能够识别恶意软件的本地指标，对全连接层最大池化处理后，使得系统能够评估整个文件中这些指标的相对强度，从而找出重要的全局组合
   + **在分析标记为恶意软件的时候能够提供更好的解释能力**
 
-<img src="README.assets/malconv.png" alt="malconv" style="zoom:50%;" />
+<img src="README.assets/malconv.png" alt="malconv" width = "200" height = "300" />
 
 + **挑战**
 
