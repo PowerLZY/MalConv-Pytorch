@@ -58,10 +58,17 @@ def get_data_label(data_path, label_path, file_name):
 
 	df["id"] = names
 	df.to_csv(label_path + file_name, index=False, encoding="utf-8")
+# 返回目录下文件列表
+def get_filename(datapath):
+	filename = []
 
+	for path in glob.glob(datapath):
+		filename.append(path.split('/')[-1])
+
+	return filename
 
 def plot_header_contribution_histogram(bytestring_program: bytearray, itgs: np.ndarray, percentage: bool = True,
-									   force_plot: bool = True):
+									   force_plot: bool = True, save_path: str = " ", filename = "test"):
 	"""Plot integrated gradient results, divided by sections
 
 	Parameters
@@ -129,7 +136,7 @@ def plot_header_contribution_histogram(bytestring_program: bytearray, itgs: np.n
 	if force_plot:
 		fig.tight_layout()
 		fig.set_size_inches(18.5, 10.5)
-		plt.show()
+		fig.savefig(save_path + "/plot_header_contribution_histogram_"+filename+".png")
 
 
 def plot_code_segment(
@@ -143,6 +150,8 @@ def plot_code_segment(
 		force_plot: bool = True,
 		width: int = 16,
 		percentage: bool = True,
+		save_path: str = " ",
+		filename = "test"
 ):
 	"""Plot contribution of chunks of bytes.
 
@@ -207,7 +216,7 @@ def plot_code_segment(
 	hmap.set_title(title, fontsize=25)
 	fig.tight_layout()
 	fig.set_size_inches(18.5, 10.5)
-	plt.show()
+	fig.savefig(save_path+"/plot_code_segment_"+filename+".png")
 
 
 
