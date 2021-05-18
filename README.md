@@ -5,9 +5,7 @@ A Pytorch implementation of MalConv
 - [x] 服务器保存模型
 - [x] [Integrated gradients applied to malware programs](https://captum.ai/tutorials/IMDB_TorchText_Interpret)
 - [ ] [复现 Classifying Sequences of Extreme Length with Constant Memory Applied to Malware Detection](https://github.com/PowerLZY/Malconv-Pytorch)
-- [x] 添加更多Malware样本
-- [ ] 多模型对比曲线图
-- [x] 添加MalGAN-master项目
+- [ ] 添加更多Malware样本
 ---
 ## Desciprtion
 
