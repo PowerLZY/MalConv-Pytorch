@@ -1,4 +1,5 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 import sys
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
@@ -7,7 +8,10 @@ sys.path.append(rootPath)
 import numpy as np
 import torch
 from torch.autograd import Variable
-from src.model import MalConv,PreMalConv
+from src.model import PreMalConv, MalConv
+#from secml_malware.models.malconv import MalConv
+#from secml_malware.models.c_classifier_end2end_malware import CClassifierEnd2EndMalware, End2EndModel
+
 from src.util import *
 from torch.utils.data import DataLoader
 
@@ -20,9 +24,8 @@ train_data_path =rootPath + "/data/one/"  # Training data
 model_path = rootPath + '/checkpoint/pretrained_malconv.pth'
 save_path = rootPath + "/picture"
 filename = get_filename(train_data_path+"*") # 样本列表
-labels = [1 for _ in filename] # filename 标签列表
+labels = [0 for _ in filename] # filename 标签列表
 # Parameter
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 use_gpu = True              #
 use_cpu = 1                # Number of cores to use for data loader
 batch_size = 1          #
@@ -30,6 +33,8 @@ first_n_byte = 2 ** 20     # First N bytes of a PE file as the input of MalConv 
 
 # 加载模型
 model = PreMalConv()
+#model = CClassifierEnd2EndMalware(model)
+#model.load_pretrained_model()
 model.load_state_dict(torch.load(model_path))
 model.eval()
 if use_gpu:
@@ -58,7 +63,7 @@ for x, val_batch_data in enumerate(validloader):
     print('IG Attributions:', attributions)
     malware = exe_input.squeeze(0).cpu().detach().numpy()
     conf = model(exe_input)
-    title = 'Confidence: {0:.4f}%\nDOS + COFF + OPT + SECT Headers\nBaseline : empty file'.format(conf.item())
+    title = 'Confidence: {0:.4f}%\nDOS + COFF + OPT + SECT Headers\nBaseline : empty file'.format(conf.item()*100)
     plot_code_segment(malware, 0, 512, attributions, title, force_plot=True,
                       show_positives=True, show_negatives=True, save_path=save_path, filename = filename[x])
     # 字节流转化

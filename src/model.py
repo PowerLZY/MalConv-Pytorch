@@ -79,13 +79,20 @@ class PreMalConv(nn.Module):
 		x = torch.transpose(x, -1, -2)
 
 		cnn_value = self.conv1d_1(x)
+		cnn_value = torch.relu(cnn_value)
 		gating_weight = self.sigmoid(self.conv1d_2(x))
 
 		x = cnn_value * gating_weight
-		x = self.pooling(x)
 
-		x = x.view(-1, 128)
-		x = self.dense_1(x)
-		x = self.dense_2(x)
+		global_max_pooling1d_1 = F.max_pool1d(input=x, kernel_size=x.size()[2:])
+		global_max_pooling1d_1_flatten = global_max_pooling1d_1.view(global_max_pooling1d_1.size(0), -1)
 
-		return x
+		x = torch.relu(self.dense_1(global_max_pooling1d_1_flatten))
+		dense_1_activation = torch.relu(x)
+		dense_2 = self.dense_2(x)
+		dense_2_activation = torch.sigmoid(dense_2)
+
+		return dense_2_activation
+
+
+
