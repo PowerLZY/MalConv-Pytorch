@@ -64,7 +64,7 @@ for x, val_batch_data in enumerate(validloader):
     malware = exe_input.squeeze(0).cpu().detach().numpy()
     conf = model(exe_input)
     title = 'Confidence: {0:.4f}%\nDOS + COFF + OPT + SECT Headers\nBaseline : empty file'.format(conf.item()*100)
-    plot_code_segment(malware, 0, 512, attributions, title, force_plot=True,
+    plot_code_segment(malware, 256, 768, attributions, title, force_plot=True,
                       show_positives=True, show_negatives=True, save_path=save_path, filename = filename[x])
     # 字节流转化
     malware = [i-1 for i in malware.tolist() if i > 0]
