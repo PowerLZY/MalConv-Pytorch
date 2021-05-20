@@ -24,17 +24,18 @@ valid_label_path = curPath +'/data/example-valid-label.csv' # Validation Label
 """
 服务器执行语法：
 nohup /usr/local/anaconda3/bin/python3.7 /home/lizy/ml/MalConv-Pytorch/malconv-mining.py >> /home/lizy/ml/MalConv-Pytorch/log/malconv-mining-1000.log 2>&1 
+cd 到MalConv-Pytorch下
 """
-exp_name = 'malconv'
+exp_name = 'malconv_BN'
 
 ### Parameter
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 use_gpu = True                #
 use_cpu = 32                # Number of cores to use for data loader
-display_step = 10           # Std output update rate during training
-test_step = 150             # Test per n step
+display_step = 10           # Std output update rate during training 和 保存训练结果步长
+test_step = 100             # Test per n step
 learning_rate = 0.0001     #
-max_step = 1000            # Number of steps to train
+max_step = 500            # Number of steps to train
 batch_size = 32          #
 first_n_byte = 1000000     # First N bytes of a PE file as the input of MalConv (defualt: 2 million)
 window_size = 500          # Kernel size & stride for Malconv (defualt : 500)
@@ -89,9 +90,7 @@ log_msg = '{}, {:.6f}, {:.4f}, {:.6f}, {:.4f}, {:.2f}'
 history = {}
 history['tr_loss'] = []
 history['tr_acc'] = []
-
-log = open(log_file_path, 'w')
-log.write('step,tr_loss, tr_acc, val_loss, val_acc, time\n')
+train_acc = [] # 保存训练结果
 
 valid_best_acc = 0.0
 total_step = 0
@@ -121,12 +120,14 @@ while total_step < max_step:
 
         history['tr_loss'].append(loss.cpu().data.numpy())
         history['tr_acc'].extend(list(label.cpu().data.numpy().astype(int) == (sigmoid(pred).cpu().data.numpy() + 0.5).astype(int)))
-
+        acc = list(label.cpu().data.numpy().astype(int) == (sigmoid(pred).cpu().data.numpy() + 0.5).astype(int))
+        #print(np.mean(acc))
         step_cost_time = time.time() - start
 
         if (step + 1) % display_step == 0:
             print(step_msg.format(total_step, np.mean(history['tr_loss']), np.mean(history['tr_acc']), step_cost_time))
-
+            train_acc.append(np.mean(history['tr_acc']))  # 保存训练结果
+            #print(np.mean(history['tr_acc']))
         total_step += 1
 
         # Interupt for validation
@@ -156,21 +157,30 @@ while total_step < max_step:
             list(label.cpu().data.numpy().astype(int) == (sigmoid(pred).cpu().data.numpy() + 0.5).astype(int)))
         history['val_pred'].append(list(sigmoid(pred).cpu().data.numpy()))
 
+
     print(log_msg.format(total_step, np.mean(history['tr_loss']), np.mean(history['tr_acc']),
                          np.mean(history['val_loss']), np.mean(history['val_acc']), step_cost_time))
 
     print(valid_msg.format(total_step, np.mean(history['tr_loss']), np.mean(history['tr_acc']),
                            np.mean(history['val_loss']), np.mean(history['val_acc'])))
 
-    # 保存模型
-    if valid_best_acc < np.mean(history['val_acc']):
-        valid_best_acc = np.mean(history['val_acc'])
-        torch.save(malconv.state_dict(), chkpt_acc_path)
-        # model_dict=model.load_state_dict(torch.load(PATH))
-        print('Checkpoint saved at', chkpt_acc_path)
-        write_pred(history['val_pred'], valid_idx, pred_path)
-        print('Prediction saved at', pred_path)
-
     history['tr_loss'] = []
     history['tr_acc'] = []
 
+
+
+train_acc_list=np.array(train_acc)
+np.save('saves/{0}_{1}_train_acc_list.npy'.format(exp_name, first_n_byte),train_acc_list) # 保存为.npy格式
+
+# 训练对别图
+# Plot TPR
+"""
+plt.figure()
+plt.plot(range(len(Train_TPR)), Train_TPR, c='r', label='Training Set', linewidth=2)
+plt.plot(range(len(Test_TPR)), Test_TPR, c='g', linestyle='--', label='Validation Set', linewidth=2)
+plt.xlabel('Epoch')
+plt.ylabel('TPR')
+plt.legend()
+plt.savefig('saves/Epoch_TPR({0}, {1}).png'.format(self.blackbox, flag[self.same_train_data]))
+plt.show()
+"""
