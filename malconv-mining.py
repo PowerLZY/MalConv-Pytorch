@@ -26,7 +26,7 @@ valid_label_path = curPath +'/data/example-valid-label.csv' # Validation Label
 nohup /usr/local/anaconda3/bin/python3.7 /home/lizy/ml/MalConv-Pytorch/malconv-mining.py >> /home/lizy/ml/MalConv-Pytorch/log/malconv-mining-1000.log 2>&1 
 cd 到MalConv-Pytorch下
 """
-exp_name = 'malconv_BN'
+exp_name = 'malconv'
 
 ### Parameter
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
@@ -36,8 +36,8 @@ display_step = 10           # Std output update rate during training 和 保存�
 test_step = 100             # Test per n step
 learning_rate = 0.0001     #
 max_step = 500            # Number of steps to train
-batch_size = 32          #
-first_n_byte = 1000000     # First N bytes of a PE file as the input of MalConv (defualt: 2 million)
+batch_size = 128          #
+first_n_byte = 100000     # First N bytes of a PE file as the input of MalConv (defualt: 2 million)
 window_size = 500          # Kernel size & stride for Malconv (defualt : 500)
 ### output path
 log_dir = curPath + '/log/'
@@ -170,7 +170,7 @@ while total_step < max_step:
 
 
 train_acc_list=np.array(train_acc)
-np.save('saves/{0}_{1}_train_acc_list.npy'.format(exp_name, first_n_byte),train_acc_list) # 保存为.npy格式
+np.save('saves/{0}_{2}_{1}_train_acc_list.npy'.format(exp_name, first_n_byte, batch_size),train_acc_list) # 保存为.npy格式
 
 # 训练对别图
 # Plot TPR
