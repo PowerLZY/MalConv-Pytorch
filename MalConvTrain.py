@@ -49,10 +49,10 @@ parser.add_argument('--max_len', type=int, default=16000000, help='Maximum lengt
 parser.add_argument('--gpus', nargs='+', type=int)
 
 
-parser.add_argument('mal_train', type=dir_path, help='Path to directory containing malware files for training')
-parser.add_argument('ben_train', type=dir_path, help='Path to directory containing benign files for training')
-parser.add_argument('mal_test', type=dir_path, help='Path to directory containing malware files for testing')
-parser.add_argument('ben_test', type=dir_path, help='Path to directory containing benign files for testing')
+#parser.add_argument('mal_train', type=dir_path, help='Path to directory containing malware files for training')
+#parser.add_argument('ben_train', type=dir_path, help='Path to directory containing benign files for training')
+#parser.add_argument('mal_test', type=dir_path, help='Path to directory containing malware files for testing')
+#parser.add_argument('ben_test', type=dir_path, help='Path to directory containing benign files for testing')
 
 args = parser.parse_args()
 
@@ -79,6 +79,8 @@ train_loader = DataLoader(whole_dataset, batch_size=BATCH_SIZE, num_workers=load
 
 test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, num_workers=loader_threads, collate_fn=pad_collate_func,
                          sampler=RandomChunkSampler(test_dataset, BATCH_SIZE))
+
+
 
 if GPUS is None:  # use ALL of them! (Default)
     device_str = "cuda:0"
