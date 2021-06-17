@@ -85,8 +85,6 @@ https://github.com/vahidk/tfrecord
     + 一种解释方法是，门控卷积层能够识别恶意软件的本地指标，对全连接层最大池化处理后，使得系统能够评估整个文件中这些指标的相对强度，从而找出重要的全局组合
   + **在分析标记为恶意软件的时候能够提供更好的解释能力**
 
-<img src="README.assets/malconv.png" alt="malconv" style="zoom:50%;" />
-
 + **挑战**
 
   + 恶意软件中的字节包含的信息具有**多态性**。上下文中的任何特定字节既可以表示为**人类可读的文本**，也可以表示为**二进制代码**或**任意对象（如图像等）**。此外，其中的某些内容可能是经过加密处理的，这样的话，它们对神经网络来说基本上就是随机的
@@ -99,7 +97,6 @@ https://github.com/vahidk/tfrecord
 
   + **Learning Deep Features for Discriminative Localization. Zhou, B.; Khosla, A.; Lapedriza, A.; Oliva, A.; and Torralba, A. (CVPR 2016)** [https://arxiv.org/abs/1512.04150](https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.04150)
 
-  ![image-20210511225002574](README.assets/image-20210511225002574.png)
 
 + 通过阅读已经发表的相关论文，我们发现，对于字节n-gram模型来说，几乎所有的判别性信息都是从可执行文件的头部中取得的。这意味着字节n-gram模型通常不使用文件的实际可执行代码或数据段作为判别性特征。表1中的结果表明，在我们的测试中，可以访问整个可执行文件的模型比仅限于文件头的模型具有更高的分类准确性。
 + 我们的恶意软件分析专家对224个随机选取的二进制文件的稀疏CAM进行分析的结果显示，在我们的模型获取的最重要的特征中，有39-42％的特征位于文件头之外。特别是，我们发现可执行代码和数据中都含有判别性特征
