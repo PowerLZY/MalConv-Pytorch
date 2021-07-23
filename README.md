@@ -37,7 +37,7 @@
 
 + **MalConv模型结构** [知乎链接](专家教你利用深度学习检测恶意代码 - 嘶吼RoarTalk的文章 - 知乎 https://zhuanlan.zhihu.com/p/32251097) [PE 结构 ](https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format)[Github复现](https://github.com/PowerLZY/MalConv-Pytorch)
   
-  <img src="source/malconv.png" alt="malconv" style="zoom:50%;" />
+  <img src="source/malconv.png" align="center" width="420px" height="500px" />
   
   + **计算量和内存用量能够根据序列长度而高效地扩展**
     + 我们能够通过使用门控卷积体系结构和可训练的输入字节的**嵌入向量**表示来最大化网络的可训练参数数量来实现了上面的第一个目标
