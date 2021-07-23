@@ -1,3 +1,6 @@
 
 .DS_Store
 /data
+*.pyc
+pred/example_sd_10.pred
+*.pred
