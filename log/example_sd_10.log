@@ -1,0 +1,1 @@
+step,tr_loss, tr_acc, val_loss, val_acc, time
