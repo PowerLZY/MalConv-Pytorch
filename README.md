@@ -35,7 +35,7 @@
 
 **Malware Detection by Eating a Whole EXE（2018 AAAIW)**
 
-+ **MalConv模型结构** [知乎链接](专家教你利用深度学习检测恶意代码 - 嘶吼RoarTalk的文章 - 知乎 https://zhuanlan.zhihu.com/p/32251097) [PE 结构 ](https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format)[Github复现](https://github.com/PowerLZY/MalConv-Pytorch)
++ **MalConv模型结构** [知乎链接](https://zhuanlan.zhihu.com/p/32251097) [PE 结构 ](https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format)[Github复现](https://github.com/PowerLZY/MalConv-Pytorch)
   
   <img src="source/malconv.png" align="center" width="420px" height="500px" />
   
