@@ -17,10 +17,12 @@ import torch.optim as optim
 from torch.autograd import Variable
 
 
-label_path = curPath+ "/data/"
-train_data_path =curPath + "/data/mining/"  # Training data
-train_label_path = curPath +'/data/example-train-label.csv' # Training label
-valid_label_path = curPath +'/data/example-valid-label.csv' # Validation Label
+# 读取数
+label_path = "/public/malware/mining-2-6000/data"
+train_data_path =label_path + "/data/mining/"  # Training data
+train_label_path = label_path +'/data/example-train-label.csv' # Training label
+valid_label_path = label_path +'/data/example-valid-label.csv' # Validation Label
+
 """
 服务器执行语法：
 nohup /usr/local/anaconda3/bin/python3.7 /home/lizy/ml/MalConv-Pytorch/malconv-mining.py >> /home/lizy/ml/MalConv-Pytorch/log/malconv-mining-1000.log 2>&1 

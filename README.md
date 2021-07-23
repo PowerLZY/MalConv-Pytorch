@@ -1,11 +1,7 @@
 ## MalConv-Pytorch
 #### **A Pytorch implementation of MalConv**
 
-+   [Integrated gradients applied to malware programs](https://captum.ai/tutorials/IMDB_TorchText_Interpret)
-
 +   [Classifying Sequences of Extreme Length with Constant Memory Applied to Malware Detection](https://github.com/PowerLZY/Malconv-Pytorch)
-
-+   [Neural Network Malware Binary Classification](https://github.com/jaketae/deep-malware-detection)
 
 #### Research Work
 
@@ -35,10 +31,16 @@
 
 **Malware Detection by Eating a Whole EXE（2018 AAAIW)**
 
-+ **MalConv模型结构** [知乎链接](专家教你利用深度学习检测恶意代码 - 嘶吼RoarTalk的文章 - 知乎 https://zhuanlan.zhihu.com/p/32251097) [PE 结构 ](https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format)[Github复现](https://github.com/PowerLZY/MalConv-Pytorch)
-  
++   **相关资料**
+    +   [知乎链接](专家教你利用深度学习检测恶意代码 - 嘶吼RoarTalk的文章 - 知乎 https://zhuanlan.zhihu.com/p/32251097) 
+    +   [PE 结构 ](https://docs.microsoft.com/en-us/windows/desktop/debug/pe-format)
+    +   [Github复现](https://github.com/PowerLZY/MalConv-Pytorch)
+    +   [Neural Network Malware Binary Classification](https://github.com/jaketae/deep-malware-detection)
+
++ **MalConv模型结构** 
+
   <img src="source/malconv.png" alt="malconv" style="zoom:50%;" />
-  
+
   + **计算量和内存用量能够根据序列长度而高效地扩展**
     + 我们能够通过使用门控卷积体系结构和可训练的输入字节的**嵌入向量**表示来最大化网络的可训练参数数量来实现了上面的第一个目标
     + 通过使用**更大的步幅和更大的卷积滤波器**大小来控制卷积层激活单元所占用的内存单元数量
@@ -46,7 +48,7 @@
     + 在卷积层后面添加了**全局最大池化层**
     + 一种解释方法是，门控卷积层能够识别恶意软件的本地指标，对全连接层最大池化处理后，使得系统能够评估整个文件中这些指标的相对强度，从而找出重要的全局组合
   + **在分析标记为恶意软件的时候能够提供更好的解释能力**
-  
+
 + **挑战**
 
   + 恶意软件中的字节包含的信息具有**多态性**。上下文中的任何特定字节既可以表示为**人类可读的文本**，也可以表示为**二进制代码**或**任意对象（如图像等）**。此外，其中的某些内容可能是经过加密处理的，这样的话，它们对神经网络来说基本上就是随机的
@@ -62,6 +64,7 @@
 
     +   积分梯度 ***Axiomatic Attribution for Deep Networks*** 
         + Captum
+        + [Integrated gradients applied to malware programs](https://captum.ai/tutorials/IMDB_TorchText_Interpret)
 
 #### 三、Malconv-Adversarial 模型
 
