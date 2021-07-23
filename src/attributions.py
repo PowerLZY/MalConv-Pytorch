@@ -20,6 +20,21 @@ from captum.attr import (
     LayerIntegratedGradients # embedding层积分梯度
 )
 
+
+def load_binaries(data_path, first_n_byte):
+    '''
+    Import the sample and convert it into a fixed length byte sequence for MalConv
+    :param data_path: Analysis sample path
+    :param first_n_byte: fixed length
+    :return numpy: byte sequence
+    '''
+    with open(data_path, 'rb') as f:
+        tmp = [i + 1 for i in f.read()[:first_n_byte]]  # index 0 will be special padding index 每个值加一
+        tmp = tmp + [0] * (first_n_byte - len(tmp))
+
+    return np.array(tmp)
+
+
 train_data_path =rootPath + "/data/one/"  # Training data
 model_path = rootPath + '/checkpoint/pretrained_malconv.pth'
 save_path = rootPath + "/picture"
@@ -39,6 +54,18 @@ model.load_state_dict(torch.load(model_path))
 model.eval()
 if use_gpu:
     model = model.cuda()
+
+
+sample = load_binaries(train_data_path+"Backdoor.Win32.Agent.bflv_ce22.exe", first_n_byte)
+exe_input = torch.from_numpy(sample).unsqueeze(0)
+
+exe_input = exe_input.cuda() if use_gpu else exe_input
+exe_input = Variable(exe_input.long(), requires_grad=False)
+
+conf = model(exe_input)
+
+pred = conf.detach().cpu().numpy()[0,0]
+
 
 # 文件名列表、数据文件夹、文件列表标签、前n位字节
 validloader = DataLoader(ExeDataset(filename, train_data_path, labels, first_n_byte),
