@@ -56,7 +56,7 @@
 + **可解释性**
 
     + **类激活映射CAM**
-    + 希望自己的神经网络对分类的结果具有一定的可解释性，以节约分析师的精力和时间。本文的思想是受到[Zhou et al. 2016]论文中的类激活映射（CAM）技术的启发而获得灵感的。对于良性和恶意软件中的每一个类别，我们都会为卷积层中最活跃的应用位置上每个过滤器的相对贡献生成一个映射。**[Learning Deep Features for Discriminative Localization (CVPR 2016)](https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.04150)**
+        + 希望自己的神经网络对分类的结果具有一定的可解释性，以节约分析师的精力和时间。本文的思想是受到[Zhou et al. 2016]论文中的类激活映射（CAM）技术的启发而获得灵感的。对于良性和恶意软件中的每一个类别，我们都会为卷积层中最活跃的应用位置上每个过滤器的相对贡献生成一个映射。**[Learning Deep Features for Discriminative Localization (CVPR 2016)](https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1512.04150)**
 
     ![CAM](source/CAM.png)
 
