@@ -1,9 +1,12 @@
 import os
-
 import pandas as pd
 
 
 def main():
+    '''
+
+    :return:
+    '''
     cache = []
     for file_name in os.listdir(os.getcwd()):
         _, extension = os.path.splitext(file_name)

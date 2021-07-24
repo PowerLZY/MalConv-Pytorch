@@ -1,8 +1,8 @@
 import argparse
 import os
 import random
-import zipfile
-
+from zipfile import *
+from io import BytesIO
 import requests
 from bs4 import BeautifulSoup
 
@@ -13,7 +13,7 @@ def construct_href(link):
     return f"{root}sampleshare{action}getfile{hash_}"
 
 
-def download(session, href, save_dir):
+def download(session, href, save_dir, index):
     source = session.get(href, allow_redirects=True)
     try:
         with ZipFile(BytesIO(source.content)) as f:
@@ -39,7 +39,7 @@ def main(args):
         for index in indices:
             link = tds[index].find("a")["href"]
             href = construct_href(link)
-            download(session, href, args.save_dir)
+            download(session, href, args.save_dir, index)
 
 
 if __name__ == "__main__":
