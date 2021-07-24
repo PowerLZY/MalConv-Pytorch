@@ -1,5 +1,7 @@
 ## MalConv-Pytorch
-#### **A Pytorch implementation of MalConv**
+A PyTorch implementation of  [Malware Detection by Eating a Whole EX](https://arxiv.org/abs/1710.09435)
+
+-   [ ] requirments.txt
 
 +   [Classifying Sequences of Extreme Length with Constant Memory Applied to Malware Detection](https://github.com/PowerLZY/Malconv-Pytorch)
 
