@@ -6,7 +6,10 @@ from io import BytesIO
 import requests
 from bs4 import BeautifulSoup
 
-
+# shell
+# 查看文件数量 ls -l | grep "^-" | wc -l
+# 将指定类型文件带目录结构打包 find test/ -name '*.txt' |xargs tar czf test3.tgz
+# 解包到目录test3 tar zxvf test3.tgz -C test3
 def construct_href(link):
     root, rest = link.split("sample")
     action, hash_ = rest.split("detail")

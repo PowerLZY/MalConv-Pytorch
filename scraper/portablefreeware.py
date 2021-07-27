@@ -7,22 +7,15 @@ from zipfile import BadZipFile, ZipFile
 import requests
 from bs4 import BeautifulSoup
 
-"""
-以下命令为复制/media下面的所有rpm文件
-
-find /media -name *.rpm -exec cp {} /iso/rh5/ \;
-
-注意：\;前面必须存在空格，否则会报缺少-exec参数。
-"""
 
 def get_href(index):
-    link = f"https://wikidll.com/download/{index}"
+    link = f"http://www.portablefreeware.com/index.php?id={index}"
     html = requests.get(link, allow_redirects=True).text
     soup = BeautifulSoup(html, "html.parser")
     href = soup.find("a", {"class": "download__link"})["href"]
     return href
-
-
+# http://www.portablefreeware.com/download.php?dd=2916
+# http://www.palettetune.com/PaletteTune.exe
 def download(index, save_dir):
     href = get_href(index)
     source = requests.get(href, allow_redirects=True)
