@@ -13,6 +13,8 @@ from bs4 import BeautifulSoup
 find /media -name *.rpm -exec cp {} /iso/rh5/ \;
 
 注意：\;前面必须存在空格，否则会报缺少-exec参数。
+
+ nohup python dll.py --num_files 28000 --save_dir /public/benign_dataset/wikidll >> wikidll.log 2>&1 &
 """
 
 def get_href(index):
@@ -39,8 +41,8 @@ def main(args):
         assert os.path.isdir(args.save_dir)
     except AssertionError:
         os.mkdir(args.save_dir)
-    indices = random.sample(range(1, 28000), args.num_files)
-    #indices = [10000+i for i in range(args.num_files)]
+    #indices = random.sample(range(1, 28000), args.num_files)
+    indices = [1+i for i in range(args.num_files)]
     _ = [download(index, args.save_dir) for index in indices]
 
 
