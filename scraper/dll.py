@@ -14,7 +14,7 @@ find /media -name *.rpm -exec cp {} /iso/rh5/ \;
 
 注意：\;前面必须存在空格，否则会报缺少-exec参数。
 
- nohup python dll.py --num_files 28000 --save_dir /public/benign_dataset/wikidll >> wikidll.log 2>&1 &
+nohup python dll.py --num_files 28000 --save_dir /public/benign_dataset/wikidll >> wikidll.log 2>&1 &
 """
 
 def get_href(index):
