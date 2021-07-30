@@ -17,7 +17,7 @@ class MalConv(nn.Module):
         self.pooling = nn.MaxPool1d(int(input_length / window_size))
 
         self.fc_1 = nn.Linear(128, 128)
-        self.fc_2 = nn.Linear(128, 1)
+        self.fc_2 = nn.Linear(128, 9)
 
         # self.BatchNorm1d = nn.BatchNorm1d(128)
 
@@ -39,7 +39,7 @@ class MalConv(nn.Module):
 
         x = x.view(-1, 128)
         x = self.fc_1(x)
-        x = self.BatchNorm1d(x)
+        # x = self.BatchNorm1d(x)
         x = self.fc_2(x)
         # x = self.sigmoid(x)
 
