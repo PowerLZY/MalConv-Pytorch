@@ -3,7 +3,7 @@
 
 +   [Integrated gradients applied to malware programs](https://captum.ai/tutorials/IMDB_TorchText_Interpret)
 
-+   [Classifying Sequences of Extreme Length with Constant Memory Applied to Malware Detection](https://github.com/PowerLZY/Malconv-Pytorch)
++   [Classifying Sequences of Extreme Length with Constant Memory Applied to Malware Detection](https://github.com/NeuromorphicComputationResearchProgram/MalConv2)
 
 +   [Neural Network Malware Binary Classification](https://github.com/jaketae/deep-malware-detection)
 
