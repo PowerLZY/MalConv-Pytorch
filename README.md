@@ -25,7 +25,7 @@
     + 几乎所有对MalConv模型最有影响的激活都发生在PE文件的头中，这是因为它使用了一个单一的门卷积层和全局池。
   + ***TESSERACT: Eliminating Experimental Bias in Malware Classification across Space and Time （2019 S&P)***
       + **Video** https://www.youtube.com/watch?v=6INFR2AVWU0
-+ **Adversarial Malware Binaries: Evading Deep Learning for Malware Detection in Executables**
++ **Classifying Sequences of Extreme Length with Constant Memory Applied to Malware Detection (a.k.a., MalConv2)**
   + **Malconv优化** 
   + 论文 https://arxiv.org/abs/2012.09390
   + 开发了一种新的时间最大池方法，使得所需的内存对序列长度T保持不变。这使得MalConv的内存效率提高了116倍，在原始数据集上训练的速度提高了25.8倍，同时**消除了MalConv的输入长度限制**
